@@ -1,0 +1,41 @@
+
+
+    <div class = "col-xs-12" "user-index" >
+        <h2>uses serch for "test"</h2>
+        <table class = "table">
+         <thead>
+         <% if @model == "user" %>
+            <tr>
+                <th>image</th>
+                <th>name</th>
+            </tr>
+         <% elsif @model == "book" %>
+            <tr>
+                <th>user</th>
+                <th>title</th>
+                <th>content</th>
+            </tr>
+         <% end %>
+         </thead>
+         <tbody>
+         <% @dates.each do |date| %>
+            <% if @model == "user" %>
+                <tr>
+                <td><%= attachment_image_tag date, :profile_image, size: "40x40", fallback: "no_image.jpg"%></td>
+                <td><%= date.name %></td>
+                <td><%= link_to "Show", user_path(date.id), class: "link" %></td>
+                </tr>
+            <% elsif @model == "book" %>
+                <tr>
+                <td>
+                <%= link_to user_path(date.user) do %>
+                <%= attachment_image_tag date.user, :profile_image, size: "40x40", fallback: "no_image.jpg"%>
+                <% end %>
+                </td>
+                <td><%= link_to date.title, book_path(date.id), class: "link" %></td>
+                <td><%= date.body %></td>
+                </tr>
+            <% end %>
+        <% end %>
+         </tbody>   
+        </table>

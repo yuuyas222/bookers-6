@@ -1,0 +1,67 @@
+<% if flash[:notice] %>
+    <%= flash[:notice] %>
+<% end %>  
+
+<%= render "users/templet" %>
+
+
+<div class ="col-xs-9">
+
+    <table class = "table">
+    <thead>
+        <h2>Book detail</h2>
+    </thead>        
+         <tbody>
+         
+            <td>
+                <%= attachment_image_tag @user, :profile_image, size: "40x40", fallback: "no_image.jpg"%><br>
+                <%= link_to @user.name, user_path(@user.id), class: "link" %>
+            </td>   
+            <td>
+                <%= link_to @bookcreate.title, book_path(@bookcreate.id), class: "link" %>
+            </td>
+            <td>
+                <%= @bookcreate.body %>
+            </td>
+        <% if @bookcreate.user == current_user %> 
+           <td> 
+            <%= link_to edit_book_path(@bookcreate.id) do %>
+                <button type="button" class="btn btn-success active">Edit</button>
+            <% end %>
+           </td>
+           <td> 
+            <%= link_to book_path(@bookcreate.id), method: :delete do %>
+                <button type="button" class="btn btn-danger active">Destroy</button>
+            <% end %>
+           </td>
+        <% end %>
+        <%= render "books/favorite", book: @bookcreate %>
+           </td>
+           <td>
+              <span>コメント数：　<%= @bookcreate.book_comments.count %></span>
+           </td>
+          
+          
+         </tbody>   
+    </table>
+
+<div id="table-comment">        
+    <%= render "book_comments/comment", book_comments: @bookcreate.book_comments %>        
+</div>
+
+<div class = "comment">
+    <%= form_with(model: [@bookcreate, @comment], remote: true) do |f| %>
+      <div class = "col-xs-9">
+          <%= f.text_area :comment, class: "col-xs-12 comment_heigth" %>
+      </div>
+      <div class = "col-xs-3">
+          <%= f.submit "送信" %>
+      </div>
+    <% end %>
+  </div>
+
+ </div> 
+</div>
+
+
+

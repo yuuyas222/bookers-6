@@ -1,0 +1,50 @@
+  <% if @book.errors.any? %>
+    <div class = "error">
+    <h2><%= @book.errors.count %>errors prohibited this obj from being saved:</h2>
+    <ul>
+    <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+    <% end %>
+    </ul>
+    </div>
+  <% end %>
+
+  <%= render "users/templet" %>
+ 
+ 
+ <div class ="col-xs-9">
+ <h2>Books</h2>
+ 
+     <table class = "table">
+         <thead>
+         <tr>   
+            <th></th>
+             <th>Title</th>
+             <th>Opinion</th>
+         </tr>
+          </thead>
+          <tbody>
+          <% @books.each do |book| %>
+             <tr>
+             <td>
+             <%= link_to user_path(book.user) do %>
+             <%= attachment_image_tag book.user, :profile_image, size: "40x40", fallback: "no_image.jpg"%>
+             <% end %>
+             </td>
+                 <td><%= link_to book.title, book_path(book.id), class: "link" %></td>
+                 <td><%= book.body %></td>
+            
+            <%= render "books/favorite", book: book %>
+           
+           <td>
+           <span>コメント数：　<%= book.book_comments.count %></span>
+           </td>
+            </tr>
+             <% end %>
+          </tbody>   
+     </table>
+ 
+ 
+  </div> 
+ </div>
+

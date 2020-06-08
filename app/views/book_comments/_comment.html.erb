@@ -1,0 +1,14 @@
+<% book_comments.each do |book_comment| %> 
+
+  <div class = "com col-xs-12">
+    <%= attachment_image_tag book_comment.user, :profile_image, size: "40x40", fallback: "no_image.jpg"%><br>
+    <%= link_to book_comment.user.name, user_path(book_comment.user.id), class: "link" %>
+    <%=book_comment.comment %> 
+  <span>
+  <% if book_comment.user_id == current_user.id %>
+    <%= link_to "delete", book_book_comment_path(book_comment.book_id,book_comment), method: :delete, remote: true, class: "btn btn-danger pull-right inline" %>
+  <% end %>
+  </span>
+  </div><br>
+
+<% end %> 
